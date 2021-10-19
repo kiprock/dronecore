@@ -1,0 +1,19 @@
+digraph G {
+"map" -> "map_ned"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 182.556 sec old)\nBuffer length: 0.000 sec\n"];
+"odom" -> "odom_ned"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 182.556 sec old)\nBuffer length: 0.000 sec\n"];
+"base_link" -> "base_link_frd"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 182.556 sec old)\nBuffer length: 0.000 sec\n"];
+"camera_link" -> "color"[label="Broadcaster: /tf_color\nAverage rate: 82.273 Hz\nMost recent transform: 182.562 ( -0.006 sec old)\nBuffer length: 4.716 sec\n"];
+"base_link" -> "camera_link"[label="Broadcaster: /tf_body_fcu\nAverage rate: 84.322 Hz\nMost recent transform: 182.566 ( -0.010 sec old)\nBuffer length: 4.720 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 182.556"[ shape=plaintext ] ;
+ }->"map";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 182.556"[ shape=plaintext ] ;
+ }->"odom";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 182.556"[ shape=plaintext ] ;
+ }->"base_link";
+}

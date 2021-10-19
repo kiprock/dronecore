@@ -1,0 +1,47 @@
+<launch>
+
+
+    <!--node pkg="tf2_ros" type="static_transform_publisher" name="sim_cam_left_broadcaster" args="0.03 0.06 0.5 -1.571 0 -1.571 base_link sim_camera_left" /-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="cam_link_broadcaster" args="0 0 0 -1.571 0 -1.571 front_left_custom_optical camera_link" />
+    <!--node pkg="tf2_ros" type="static_transform_publisher" name="cam_link_broadcaster2" args="0 0 0 -1.571 0 0 map2 drone1" /-->
+   
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+            <arg name="rtabmap_args"       value="--delete_db_on_start"/>
+            <!-- <arg name="rtabmap_args"       value="-delete_db_on_start -Optimizer/GravitySigma 0.3" make it double dashes in args-->
+            <!--arg name="frame_id"           value="sim_camera_left"/-->
+            <arg name="visual_odometry"    value="false"/>
+            <!--arg name="rgbd_topic"         value="/rgbd_image"/-->
+            <arg name="odom_topic"         value="/airsim_node/drone_1/odom_local_ned"/>
+            <arg name="rgb_topic"          value="/airsim_node/drone_1/front_left_custom/Scene"/>
+            <arg name="depth_topic"        value="/airsim_node/drone_1/front_left_custom/DepthPlanar"/>
+            <arg name="camera_info_topic"  value="/airsim_node/drone_1/front_left_custom/Scene/camera_info"/>
+            <arg name="approx_sync"        value="true"/>
+            <arg name="queue_size"         value="10"/>
+            <arg name="rviz"               value="true"/>
+            <arg name="rtabmapviz"         value="true"/>
+
+             <!-- use actionlib to send goals to move_base --> 
+            <param name="use_action_for_goal" type="bool" value="true"/>
+            <remap from="move_base"            to="/move_base"/>
+
+    </include>
+
+    <!--node pkg="rtabmap_ros" type="rgbd_sync" name="rgbd_sync" output="screen">
+      <remap from="rgb/image"         to="/camera/camera/color/image_raw"/>
+      <remap from="depth/image"       to="/camera/camera/depth/image_raw"/>
+      <remap from="rgb/camera_info"   to="/camera/camera/color/camera_info"/>
+    </node-->
+
+
+<!-- move_base 
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find dronecore)/cfg/rtabsim_costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find dronecore)/cfg/rtabsim_costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find dronecore)/cfg/rtabsim_local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find dronecore)/cfg/rtabsim_global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find dronecore)/cfg/rtabsim_dwa_local_planner_params.yaml" command="load" />
+        <param name="clearing_rotation_allowed" value="true" />
+    </node>
+    -->
+</launch>
